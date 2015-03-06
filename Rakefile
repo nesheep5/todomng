@@ -3,7 +3,7 @@ require "rspec/core/rake_task"
 require "yard"
 
 RSpec::Core::RakeTask.new(:spec)
-YARD::Rake::YardTask.new
+YARD::Rake::YardocTask.new
 
 task :default => :spec
 
