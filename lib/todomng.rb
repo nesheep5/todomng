@@ -1,4 +1,5 @@
 require "todomng/command"
+require "todomng/db"
 require "todomng/version"
 
 module Todomng
