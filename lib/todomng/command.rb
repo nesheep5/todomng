@@ -1,7 +1,19 @@
 module TodoMng
 
   # コマンドラインベースの処理を行うクラス
-class Command
+  class Command
+
+    def excute
+      DB.prepare
+    end
+
+    def create_task(name, content)
+      # タスク作成時のstatusはデフォルト値が使われNOT_YETとなる
+      # Win環境などコマンドラインとプログラムで扱うエンコードが異なる場合を考慮しreload
+      Task.create!(name: name, content: content).reload
+    end
+
   end
+
 
 end
