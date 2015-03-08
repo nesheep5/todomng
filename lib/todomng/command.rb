@@ -3,7 +3,7 @@ module TodoMng
   # コマンドラインベースの処理を行うクラス
   class Command
 
-    def excute
+    def execute
       DB.prepare
     end
 
