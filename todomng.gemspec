@@ -5,7 +5,7 @@ require 'todomng/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "todomng"
-  spec.version       = Todomng::VERSION
+  spec.version       = TodoMng::VERSION
   spec.authors       = ["Shogo Watanabe"]
   spec.email         = ["ne.sheep.5mouths@gmail.com"]
 
