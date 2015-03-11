@@ -3,6 +3,6 @@ require "todomng/db"
 require "todomng/task"
 require "todomng/version"
 
-module Todomng
+module TodoMng
   # Your code goes here...
 end
