@@ -1,3 +1,3 @@
-module Todomng
+module TodoMng
   VERSION = "0.1.0"
 end
