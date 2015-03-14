@@ -5,7 +5,7 @@ module TodoMng
   # tasksテーブルを表現するモデルクラス
   class Task < ActiveRecord::Base
 
-    scope :status_is, ->(status) {where(status: status) }
+    scope :status_is, ->(status) { where(status: status) }
 
     NOT_YET = 0 # タスクが完了していない
     DONE    = 1 #タスク完了
@@ -17,9 +17,11 @@ module TodoMng
       'PENDING' => PENDING
     }.freeze
 
+    validates :name,    presence: true,     length: { maximum: 140 }
+    validates :content, presence: true
+    validates :status,  numericality: true, inculusion: { in: STATUS.values }
   end
 
 end
-
 
 
