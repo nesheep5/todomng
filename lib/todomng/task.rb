@@ -19,7 +19,7 @@ module TodoMng
 
     validates :name,    presence: true,     length: { maximum: 140 }
     validates :content, presence: true
-    validates :status,  numericality: true, inculusion: { in: STATUS.values }
+    validates :status,  numericality: true, inclusion: { in: STATUS.values }
   end
 
 end
