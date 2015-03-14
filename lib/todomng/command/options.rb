@@ -20,6 +20,19 @@ module TodoMng
           opt.on('-c VAL', '--content=VAL', 'task content') { |v| options[:content] = v }
         end
 
+        sub_command_parsers['search'] = OptionParser.new do |opt|
+          opt.on('-s VAL', '--status=VAL', 'search status') { |v| options[:status] = v }
+        end
+
+        sub_command_parsers['update'] = OptionParser.new do |opt|
+          opt.on('-n VAL', '--name=VAL',    'update name')    { |v| options[:name]    = v }
+          opt.on('-c VAL', '--content=VAL', 'update content') { |v| options[:content] = v }
+          opt.on('-s VAL', '--status=VAL',  'update status')  { |v| options[:status]  = v }
+        end
+
+        sub_command_parsers['delete'] = OptionParser.new do |opt|
+        end
+
         # サブコマンド以外の引数の定義
         command_parser = OptionParser.new do |opt|
           opt.on_head('-v', '--version', 'Show program version') do |v|
