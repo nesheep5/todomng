@@ -1,13 +1,11 @@
 module TodoMng
-
   # コマンドラインベースの処理を行うクラス
   class Command
-
     # インスタンス生成
     def initialize(argv)
       @argv = argv
     end
-    
+
     # 実行
     def execute
       options = Options.parse!(@argv)
@@ -22,13 +20,13 @@ module TodoMng
     # タスク作成
     # @param [String] name 名前
     # @param [String] content タスク内容
-    # @return [TodoMng::Task] タスクオブジェクト 
+    # @return [TodoMng::Task] タスクオブジェクト
     def create_task(name, content)
       # タスク作成時のstatusはデフォルト値が使われNOT_YETとなる
       # Win環境などコマンドラインとプログラムでエンコードが異なる場合を考慮しreload
       Task.create!(name: name, content: content).reload
     end
-    
+
     # タスク削除
     # @param [String] id
     def delete_task(id)
@@ -39,14 +37,14 @@ module TodoMng
     # タスク更新
     # @param [String] id
     # @param [Hash] attributes
-    # @option attributes[String] :name 
+    # @option attributes[String] :name
     # @option attributes[String] :content
     # @option attributes[String] :status
-    # @return [TodoMng::Task] タスクオブジェクト 
+    # @return [TodoMng::Task] タスクオブジェクト
     def update_task(id, attributes)
       if status_name = attributes[:status]
         attributes[:status] = Task::STATUS.fetch(status_name.upcase)
-        
+
       end
 
       task = Task.find(id)
@@ -64,13 +62,11 @@ module TodoMng
       if status_name
         status = Task::STATUS.fetch(status_name.upcase)
         all_tasks.status_is(status)
-      
+
       else
         all_tasks
-      
+
       end
     end
   end
-
-
 end

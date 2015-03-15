@@ -1,14 +1,12 @@
 require 'optparse'
 
 module TodoMng
-
   class Command
     module Options
-
       def self.create_sub_command_parsers(options)
         # サブコマンドの処理をする前に、未定義のkeyを指定されたら例外を発生させる
-        sub_command_parsers = Hash.new do |k, v|
-          raise ArgumentError, "'#{v}' is not todomng sub command."
+        sub_command_parsers = Hash.new do |_k, v|
+          fail ArgumentError, "'#{v}' is not todomng sub command."
         end
 
         # サブコマンド用の定義
@@ -27,9 +25,8 @@ module TodoMng
           opt.on('-s VAL', '--status=VAL',  'update status')  { |v| options[:status]  = v }
         end
 
-        sub_command_parsers['delete'] = OptionParser.new do |opt|
+        sub_command_parsers['delete'] = OptionParser.new do |_opt|
         end
-
       end
 
       def self.create_command_parser
@@ -40,21 +37,21 @@ module TodoMng
             { name: 'list   -s status',                         summary: 'List   Todo Task' },
             { name: 'delete id',                                summary: 'Delete Todo Task' }
           ]
-          
+
           opt.banner = "Usage: #{opt.program_name} [-h|--help] [-v|--version] <command> [<args>]"
           opt.separator ''
           opt.separator "#{opt.program_name} Available Commands:"
-          
+
           sub_command_help.each do |command|
             opt.separator [opt.summary_indent, command[:name].ljust(40), command[:summary]].join(' ')
           end
 
-          opt.on_head('-h', '--help', 'Show this message') do |v|
+          opt.on_head('-h', '--help', 'Show this message') do |_v|
             puts opt.help
             exit
           end
 
-          opt.on_head('-v', '--version', 'Show program version') do |v|
+          opt.on_head('-v', '--version', 'Show program version') do |_v|
             opt.version = TodoMng::VERSION
             puts opt.ver
             exit
@@ -77,7 +74,7 @@ module TodoMng
 
           # updateとdeleteの場合はidを取得する
           if %w(update delete).include?(options[:command])
-            raise ArgumentError, "#{options[:command]} id not found." if argv.empty?
+            fail ArgumentError, "#{options[:command]} id not found." if argv.empty?
             options[:id] = Integer(argv.first)
           end
 
@@ -87,10 +84,6 @@ module TodoMng
 
         options
       end
-
     end
-
   end
-
 end
-
