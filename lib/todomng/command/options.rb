@@ -5,10 +5,7 @@ module TodoMng
   class Command
     module Options
 
-      def self.parse!(argv)
-
-        options = {}
-
+      def self.create_sub_command_parsers(options)
         # サブコマンドの処理をする前に、未定義のkeyを指定されたら例外を発生させる
         sub_command_parsers = Hash.new do |k, v|
           raise ArgumentError, "'#{v}' is not todomng sub command."
@@ -33,29 +30,67 @@ module TodoMng
         sub_command_parsers['delete'] = OptionParser.new do |opt|
         end
 
-        # サブコマンド以外の引数の定義
-        command_parser = OptionParser.new do |opt|
+      end
+
+      def self.create_command_parser
+        OptionParser.new do |opt|
+          sub_command_help = [
+            { name: 'create -n name -c content',                summary: 'Create Todo Task' },
+            { name: 'update id -n name -c content -s status',   summary: 'Update Todo Task' },
+            { name: 'list   -s status',                         summary: 'List   Todo Task' },
+            { name: 'delete id',                                summary: 'Delete Todo Task' }
+          ]
+          
+          opt.banner = "Usage: #{opt.program_name} [-h|--help] [-v|--version] <command> [<args>]"
+          opt.separator ''
+          opt.separator "#{opt.program_name} Available Commands:"
+          
+          sub_command_help.each do |command|
+            opt.separator [opt.summary_indent, command[:name].ljust(40), command[:summary]].join(' ')
+          end
+
+          opt.on_head('-h', '--help', 'Show this message') do |v|
+            puts opt.help
+            exit
+          end
+
           opt.on_head('-v', '--version', 'Show program version') do |v|
             opt.version = TodoMng::VERSION
             puts opt.ver
             exit
           end
         end
+      end
+
+      def self.parse!(argv)
+        options = {}
+
+        # サブコマンドなどのOptionParserを定義
+        sub_command_parsers = create_sub_command_parsers(options)
+        command_parser      = create_command_parser
 
         # 引数の解析を行う
         begin
           command_parser.order!(argv)
-
           options[:command] = argv.shift
-
           sub_command_parsers[options[:command]].parse!(argv)
 
-          rescue OptionParser::MissingArgment, OptionParser::InvalidOption, ArgumentError => e
+          # updateとdeleteの場合はidを取得する
+          if %w(update delete).include?(options[:command])
+            raise ArgumentError, "#{options[:command]} id not found." if argv.empty?
+            options[:id] = Integer(argv.first)
+          end
+
+        rescue OptionParser::MissingArgument, OptionParser::InvalidOption, ArgumentError => e
           abort e.message
         end
 
         options
       end
+
     end
+
   end
+
 end
+

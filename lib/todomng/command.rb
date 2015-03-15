@@ -3,8 +3,20 @@ module TodoMng
   # コマンドラインベースの処理を行うクラス
   class Command
 
+    # インスタンス生成
+    def initialize(argv)
+      @argv = argv
+    end
+    
+    # 実行
     def execute
+      options = Options.parse!(@argv)
       DB.prepare
+    end
+
+    # コマンドライン
+    def self.run(argv)
+      new(argv).execute
     end
 
     # タスク作成
