@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Todomng
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/todomng`. To experiment with that code, run `bin/console` for an interactive prompt.
@@ -38,7 +37,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
-=======
-# todomng
-ruby勉強用にTODO管理ツールを作成
->>>>>>> origin/master
+
